@@ -6,51 +6,72 @@ const words = [
     "AI & ML Student"
 ];
 
-let index = 0;
-let charIndex = 0;
+
+let wordIndex = 0;
+let characterIndex = 0;
 let deleting = false;
 
-const typing = document.getElementById("typing");
+const typingElement =
+    document.getElementById("typing");
 
-function type() {
 
-    const current = words[index];
+function typeEffect() {
+
+    const currentWord = words[wordIndex];
+
 
     if (!deleting) {
 
-        typing.textContent = current.substring(0, charIndex++);
+        typingElement.textContent =
+            currentWord.substring(
+                0,
+                characterIndex + 1
+            );
 
-        if (charIndex > current.length) {
+        characterIndex++;
+
+
+        if (characterIndex === currentWord.length) {
 
             deleting = true;
 
-            setTimeout(type, 1500);
+            setTimeout(typeEffect, 1600);
 
             return;
         }
 
-    }
+    } else {
 
-    else {
+        typingElement.textContent =
+            currentWord.substring(
+                0,
+                characterIndex - 1
+            );
 
-        typing.textContent = current.substring(0, charIndex--);
+        characterIndex--;
 
-        if (charIndex < 0) {
+
+        if (characterIndex === 0) {
 
             deleting = false;
 
-            index++;
+            wordIndex++;
 
-            if (index >= words.length)
-
-                index = 0;
+            if (wordIndex >= words.length) {
+                wordIndex = 0;
+            }
 
         }
 
     }
 
-    setTimeout(type, deleting ? 50 : 100);
+
+    setTimeout(
+        typeEffect,
+        deleting ? 45 : 90
+    );
 
 }
 
-type();
+
+typeEffect();
